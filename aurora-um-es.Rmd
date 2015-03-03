@@ -1,0 +1,107 @@
+---
+title: 'Examen. Ayuda de Prácticas no curriculares'
+author: 'Aurora González Vidal'
+date: "3/marzo/2015"
+output: pdf_document
+---
+
+
+
+## Pregunta 1, (5 Puntos)
+
+Escribe el código mínimo para que, con R, se genere la siguiente secuencia:
+
+```{r, echo=FALSE, eval=TRUE}
+rep(rep(1:4, 4:1),3)
+```
+
+```{r}
+#Solución:
+rep(rep(1:4, 4:1),3)
+```
+
+
+## Pregunta 2, (5 Puntos)
+
+Lea el fichero [pregunta2.csv](www.um.es/ae/pregunta2.csv) (`www.um.es/ae/pregunta2.csv`) que recoge diversas variables (`sexo`, `edad` en años, `edad` en meses, `altura` en pulgadas y `peso` en libras) de niños y realice las siguientes tareas:
+
+a. Muestre un resumen de la estructura del conjunto de datos.
+b. Cree un gráfico que relacione la `altura` con la `edad` y represente en él la recta de regresión entre estas dos variables.
+b. Coloree de difrente color los puntos según `sexo`.
+c. Muestre un resumen del modelo de regresión lineal simple que responda al gráfico anterior.
+
+```{r, fig.height=4, fig.width=4}
+#Solución:
+df <- read.table("http://www.um.es/ae/pregunta2.csv"
+                 , header=T
+                 , sep=";"   # el sep de campos es punto y coma
+                 , dec= ","  # la separación decimal es la coma
+                 )
+names(df)
+str(df)
+
+x <- df$edadA
+y <- df$alturaPulg
+
+plot(x , y 
+     , xlab="edad (años)"
+     , ylab="altura (pulgadas)"
+     , col=df$sexo
+     )
+fit <- lm( y~x )
+abline( fit, col="blue" )
+
+fit
+summary(fit)
+
+```
+
+
+
+## Pregunta 3, (5 Puntos)
+
+Escriba los comandos necesarios para crear un directorio  en su directorio _home_ llamado `out`, ha de estar dentro de otro directorio que se ha de llamar `usuario-mengano` y que contenga un fichero llamado `readme.md` que contenga su nombre. Cámbiele los permisos al fichero para que cualquiera pueda escribir, leer y ejecutarlo.  
+
+```{r, eval=FALSE}
+#Solución:
+mkdir  ~/usuario-mengano
+mkdir  ~/usuario-mengano/out
+touch ~/usuario-mengano/out/readme.md
+echo "Aurora González Vidal" >> ~/usuario-mengano/out/readme.md
+chmod 555 ~/usuario-mengano/out/readme.md
+```
+
+
+
+## Pregunta 4, (5 Puntos)
+
+Cree un repositorio público en [GitHub](https://github.com/) (si no tiene cuenta créesela) que se llame `examenR-89-2015` y que contenga un README.md subido con un primer `commit` y dos archivos `.txt` con un segundo `commit`.
+En el interior del fichero `README.md` deberá escribir: _Ejercicio GIT examen_.
+En el interior de los dos archivos `.txt` deberá escribir: _uno_ y _dos_ respectivamente.
+Deberá hacerlo todo mediante la consola o terminal. 
+Escriba el código utilizado, su nombre de usuario en `GitHub` y además, el `SHA` del _commit_ que hace entrega.
+
+```{r, eval=FALSE}
+#Solución:
+echo "# Ejercicio GIT examen" >> README.md
+git init
+git add README.md
+git commit -m "comentario uno"
+git remote add origin https://github.com/usuarioGIT/examenR-89-2015.git
+git push -u origin master
+echo "# uno" >> hola1.txt
+echo "# dos" >> hola2.txt
+git add --all
+git commit -m "comentario dos"
+git push
+```
+
+
+
+
+```{r,  echo=FALSE}
+
+sessionInfo()
+```
+
+
